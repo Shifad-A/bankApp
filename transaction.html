@@ -25,13 +25,13 @@
             <div class="p-2 fw-semibold">
                 <a class="text-decoration-none text-light me-5" href="">Home</a>
                 <a class="text-decoration-none text-light me-5" href="">Features</a>
-                <a class="text-decoration-none text-light me-5" href="">Pricing</a>
-                <a class="text-decoration-none text-light me-5" href="">About</a>
+                <a class="text-decoration-none text-light me-5" href="">About</a>                
             </div>
+            <button class="btn btn-light h-25 text-primary">Logout</button>
         </div>
     </nav>
     <section class="min-vh-100 bg-primary ">
-        <h1 class="text-white fw-bold p-3 text-center">Welcome</h1>
+        <h1 id="greet" class="text-white fw-bold p-3 text-center"></h1>
         <div class="container p-5">
             <div class="row p-5  gap-5">
                 <div class="col ">
@@ -81,6 +81,10 @@
     </section>
 
     <script>
+        let currentUser=JSON.parse(localStorage.getItem("currentUser"))
+        document.getElementById('greet').innerHTML=`
+        Welcome ${currentUser.username}
+        `        
 
         let balance = 0
 
@@ -88,12 +92,7 @@
             let deposit = document.getElementById("deposit-amound").value
             let pswd = document.getElementById("password").value
 
-            let user = JSON.parse(localStorage.getItem("users"))
-
-            let valid = user.find(p => p.password == pswd)
-            console.log(valid);
-
-            if (!valid) {
+            if (pswd!=currentUser.password) {
                 alert("incorrect password")
             }
 
@@ -123,8 +122,6 @@
             }
             let time=hours + ":" + minutes + ":" + seconds
            let formattedDateAndTime= `${day}/${month}/${year}  ${time}`;
-
-
             document.getElementById("result").innerHTML += `
             <div class="d-flex justify-content-around   text-dark ">
             <p> ${formattedDateAndTime} </p>
@@ -140,12 +137,7 @@
             let withdraw = document.getElementById("withdraw-amound").value
             let pswd = document.getElementById("password").value
 
-            let user = JSON.parse(localStorage.getItem("users"))
-
-            let valid = user.find(p => p.password == pswd)
-            console.log(valid);
-
-            if (!valid) {
+            if (pswd!=currentUser.password) {
                 alert("incorrect password")
             }
 
@@ -186,6 +178,12 @@
             </div><br>
             
             `
+        }
+
+        function Logout(){
+            document.getElementById('result').clear()
+            document.getElementById('greet').clear()
+
         }
 
     </script>
